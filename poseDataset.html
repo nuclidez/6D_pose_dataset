@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>6D object detection and pose estimation dataset</title>
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
+        <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    </head>
+    <body>    
+    <h1>6D object detection and pose estimation dataset</h1>
+        
+    <p>The dataset is made of scenes representing objects cluttered in pile. 20 objects are dropped in a confined space and a variable number of each object is visible in a scene. Each scene contains objects of the same class. It is designed for the purpose of training pose estimation algorithms on synthetic dataset.</p>
+
+    <p> The dataset is generated using <a href = https://www.blender.org>Blender</a>. The surface on which the objects are dropped is flat but with some spherical obstacles present. This is done to encourage more random orientation of the collected objects without which the objects tend to collect in a highly imbalanced pose distribution. The intution behind this is the fact that objects with flat faces will land on those faces for most of the cases. The dataset contains depth images and an additional 2400 scenes with RGB-D images</p> 
+
+    <figure>
+    <img src="iccvw2017/bunny_3_080/bunny_3_080.jpg" style='max-width:32%' alt="bunny" /> 
+    <img src="iccvw2017/bunny_3_080/bunny_3_080_depth_gt_colored.jpg" style='max-width:32%' alt="bunny" /> 
+    <img src="iccvw2017/bunny_3_080/bunny_3_080_depth_colored.jpg" style='max-width:32%' alt="bunny" /> 
+    <figcaption>Sample scene from the synthetic <em>bunny</em> dataset (RGB, ideal and noisy depth image).</figcaption>
+    </figure>
+       
+    
+    <h2>Dataset description</h2>
+        
+    <h3> Archive description</h3>
+    Each folder contains the following files.
+    <ul>
+        <li><em>depth</em>: depth image using rendered depth pass.</li>
+        <li><em>annot</em>: ground truth annotations for each scene.</li>
+        <li><em>mesh.ply</em>: 3D triangular mesh model of the object.</li>
+        <li><em>camera_params.txt</em>: camera parameters considered.</li>
+    </ul>
+    
+    <h3> File format </h3>
+    
+    <h4> Ground truth </h4>
+    <p>Ground truth pose annotations for a dataset are provided in txt format for scenes follows:</p>
+<p class="code"><code>
+'-' : denotes the starting of a new scene.
+Cube 250 402 189 55 18.681072 -28.967299 43.579296 -102.995496 8013 356 123 92 132 
+Cube.001 250 491 209 53 -36.077515 -22.787905 31.588846 35.072519 7854 425 166 135 83 
+Cube.002 250 544 322 57 39.642689 2.072795 41.372906 -127.725057 2647 484 271 119 105 
+Cube.003 250 476 196 57 -25.013243 -23.279526 -46.309265 93.434276 1065 417 140 118 115 
+Cube.004 250 611 255 54 10.734401 46.822071 -25.508007 97.636707 7449 567 189 87 132 
+Cube.005 250 586 161 51 48.593544 -6.201047 17.280228 106.956685 5525 541 122 97 75 
+Cube.006 250 375 174 58 -21.805529 -53.797760 -2.853811 106.813852 2091 341 110 69 128 
+Cube.007 250 495 255 57 57.035748 -1.112713 1.449942 144.532089 1824 462 224 70 65 
+Cube.008 250 564 292 56 38.037224 -10.617264 -40.032471 56.538025 4180 502 252 124 83 
+Cube.009 250 584 377 57 -41.900776 38.852871 6.504001 105.027532 4546 551 316 70 121 
+Cube.010 250 534 210 55 5.173202 50.607567 -21.865572 -144.423817 2493 471 152 128 113 
+Cube.011 250 594 199 57 -27.318714 -39.529385 31.847849 -117.124439 344 539 140 108 118 
+Cube.012 250 387 363 58 10.428387 -10.911738 56.332241 153.398959 3381 324 319 124 89 
+Cube.013 250 460 131 57 48.229443 30.106497 6.949078 15.435667 4212 405 104 114 57 
+Cube.014 250 638 170 53 53.373993 6.016070 6.686186 15.040773 2571 599 136 84 64 
+Cube.015 250 332 337 55 38.691925 7.009225 39.418152 -171.614432 6808 286 280 91 118 
+Cube.016 250 530 413 56 56.070675 8.504059 -4.253003 9.708734 3166 494 386 76 58 
+Cube.017 250 440 299 56 12.222869 25.910168 47.998520 83.185338 7726 385 236 113 128 
+Cube.018 250 494 300 59 -0.341590 -58.520817 -1.826897 -35.508480 1079 439 254 111 94 
+Cube.019 250 453 383 55 -46.252174 26.885469 -15.495949 1.887654 5508 398 350 108 72 
+</code></p>
+    <p>In this example, the scene contains twenty object instances. Each column has the following information: </p>
+    <p>Instance_name scene_id centroid_x centroid_y depth trans_x trans_y trans_z yaw visibility bbox_x bbox_y bbox_w bbox_h</p>
+    <p>where, centroid is the pixel coordinate of the centroid of the instance, depth is the actual depth in cm, trans is the translation of the camera with respect to the instance, yaw is the in-plane rotation angle, visibility is the count of the visible pixels for the instance and bbox are the pixel coordinates, width and height of the 2D bounding box for the instance.</p>
+    <h4>Camera parameters</h4>
+    Camera parameters are described within a text file of the following format:
+    <p class="code"><code>
+    width	960<br/>
+    height	540<br/>
+    fu	1050<br/>
+    fv	1050<br/>
+    cu	480<br/>
+    cv	270<br/>
+    clip_start	0.1<br/>
+    clip_end	100<br/>
+    </code></p>
+    
+    <h3>Symmetry group</h3>
+    
+    <p>The proposed evaluation methodology is based on the symmetry group of the object considered .The symmetry group depends on what static configurations of the object we wish to distinguish, and this choice is not necessarily obvious. 
+    For example, the <em>gear</em> object could be considered as an object with a cyclic symmetry of order 2 -- <em>i.e.</em> an invariance under rotation of 1/2 turn about a given axis -- , a cyclic symmetry of order its number of teeth, or a revolution symmetry depending on the level of details considered. We considered this latter option in our experiments, and synthesize the choices of symmetry classes we made below:</p>
+
+    <figure><img src="iccvw2017/objects.PNG" style='max-width: 500px;' alt="objects" /></figure>
+
+    <h3>3D models</h3>
+    <p>3D models of the <em>tless</em> objects used in this dataset are taken from the <a href="http://cmp.felk.cvut.cz/t-less/">T-LESS</a> dataset of T. Hodaň et al. The <em>bunny</em> and <em>markers</em> models are modified versions of original Stanford bunny from the <a href="http://graphics.stanford.edu/data/3Dscanrep/">Stanford University Computer Graphics Laboratory</a>. Other models have been downloaded from online archives in 2016-2017: "Pepper & Salt Mill Peugeot" by Ramenta (3D Warehouse), "Samdan 2" by Metin N. (3D Warehouse).</p>
+    
+    <!--
+    brick: thingiverse
+    gear: a piece from a motor on Thingiverse? -->
+    
+    <h2>Download</h2>
+    
+    <p>The data can be downloaded as a set of 7zip archives <a href="https://goo.gl/S3JVPs">here</a>.
+    </p>
+    
+    
+    <p>Additionally, we provide some evaluation tools on GitHub to ease the use of this dataset: <a href = https://github.com/rbregier/pose_recovery_evaluation>GitHub link</a>.</p>
+
+    <p>Please cite the following paper if you use this dataset:<br/>
+    <cite>Romain Brégier, Frédéric Devernay, Laetitia Leyrit and James L. Crowley, "Symmetry Aware Evaluation of 3D Object Detection and Pose Estimation in Scenes of Many Parts in Bulk", in <em>The IEEE International Conference on Computer Vision (ICCV)</em>, 2017, pp. 2209-2218.</cite>
+    (<a href="http://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w31/Bregier_Symmetry_Aware_Evaluation_ICCV_2017_paper.pdf">paper</a>, 
+    <a href="http://openaccess.thecvf.com/content_ICCV_2017_workshops/supplemental/Bregier_Symmetry_Aware_Evaluation_ICCV_2017_supplemental.pdf">supplementary material </a>,
+    <a href="iccvw2017/rbregier_iccvw_2017_poster.pdf">poster</a>).</p>
+    <p class="code"><code>
+    @InProceedings{bregier2017iccv,<br/>
+author = {Br{\'e}gier, Romain and Devernay, Fr{\'e}d{\'e}ric and Leyrit, Laetitia and Crowley, James L.},<br/>
+title = {Symmetry Aware Evaluation of 3D Object Detection and Pose Estimation in Scenes of Many Parts in Bulk},<br/>
+booktitle = {The IEEE International Conference on Computer Vision (ICCV)},<br/>
+month = {Oct},<br/>
+year = {2017}<br/>
+}
+    </code></p>
+    
+    <p>For any question or remark, contact information can be found <a href="index.html">here</a>.</p>
+    
+     <p>
+    The Siléane Dataset is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+    <br/><a href="http://www.sileane.com/en/"><img alt="sileane.com" src="iccvw2017/sileane.png"/></a>
+    </p>  
+    
+    <!--<div class="right"> <p><a href="index.html"> Back to home page.</a></p></div>-->
+    
+    </body>
+</html>
